@@ -36,10 +36,6 @@ class IsarService {
   Future<void> deleteMeal(Meal meal) async {
     final isar = await db;
     await isar.writeTxn(() async {
-      // Delete associated CatAcceptance objects
-      for (final catAcceptance in meal.catAcceptances) {
-        await isar.catAcceptances.delete(catAcceptance.id);
-      }
       // Delete the meal
       await isar.meals.delete(meal.id);
     });
@@ -70,6 +66,15 @@ class IsarService {
   Future<void> saveCatAcceptance(CatAcceptance newCatAcceptance) async {
     final isar = await db;
     isar.writeTxnSync<int>(() => isar.catAcceptances.putSync(newCatAcceptance));
+  }
+
+  Future<void> deleteCatAcceptance(List<CatAcceptance> catAcceptances) async {
+    final isar = await db;
+    await isar.writeTxn(() async {
+      for (final catAcceptance in catAcceptances) {
+        isar.catAcceptances.delete(catAcceptance.id);
+      }
+    });
   }
 
   // ***
