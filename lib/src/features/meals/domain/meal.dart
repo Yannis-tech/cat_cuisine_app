@@ -12,5 +12,7 @@ class Meal {
   String? mealSort;
   List<String>? quantities;
   String? feedingQuantity;
+
+  @Backlink(to: 'meal')
   final catAcceptances = IsarLinks<CatAcceptance>();
 }

@@ -106,15 +106,19 @@ class _ManageMealScreenState extends State<ManageMealScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context); // Get the current theme
+
     return FutureBuilder<List<Map<String, dynamic>>>(
       future: loadBrands(),
       builder: (context, snapshot) {
+        // Init shapshot
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
         } else if (snapshot.hasError) {
           return Text('An error occurred: ${snapshot.error}');
         } else if (snapshot.connectionState == ConnectionState.done &&
             snapshot.hasData) {
+          // Build
           final brandsData = snapshot.data!;
           final brandData = brandsData
               .firstWhere((brand) => brand['name'] == _brand, orElse: () => {});
@@ -199,31 +203,41 @@ class _ManageMealScreenState extends State<ManageMealScreen> {
 
                           SizedBox(height: 16),
                           ElevatedButton(
-                              onPressed: () async {
-                                if (_formKey.currentState!.validate()) {
-                                  final mealToSubmit = (widget.meal ?? Meal())
-                                    ..dateOfEntry = _dateOfEntry
-                                    ..timeOfDay = _timeOfDay
-                                    ..brand = _brand
-                                    ..mealSort = _mealSort
-                                    ..quantities = _selectedQuantity != null
-                                        ? [_selectedQuantity!]
-                                        : []
-                                    ..feedingQuantity = _feedingQuantity;
-                                  if (widget.onSubmit != null) {
-                                    widget.onSubmit!(mealToSubmit);
-                                  } else {
-                                    widget.service.saveMeal(mealToSubmit);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                            content:
-                                                Text("New meal saved in DB")));
-                                  }
-
-                                  Navigator.pop(context);
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 12),
+                              minimumSize: const Size(88, 36),
+                              foregroundColor: theme.colorScheme.onPrimary,
+                              backgroundColor: theme.colorScheme.primary,
+                            ),
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                final mealToSubmit = (widget.meal ?? Meal())
+                                  ..dateOfEntry = _dateOfEntry
+                                  ..timeOfDay = _timeOfDay
+                                  ..brand = _brand
+                                  ..mealSort = _mealSort
+                                  ..quantities = _selectedQuantity != null
+                                      ? [_selectedQuantity!]
+                                      : []
+                                  ..feedingQuantity = _feedingQuantity;
+                                if (widget.onSubmit != null) {
+                                  widget.onSubmit!(mealToSubmit);
+                                } else {
+                                  widget.service.saveMeal(mealToSubmit);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content:
+                                              Text("Mahlzeit gespeichert!")));
                                 }
-                              },
-                              child: const Text("Add new meal"))
+
+                                Navigator.pop(context);
+                              }
+                            },
+                            child: Text(widget.meal != null
+                                ? "Mahlzeit aktualisieren"
+                                : "Mahlzeit hinzufügen"), // Conditional text based on whether updating or adding
+                          )
                         ],
                       ),
                     ),

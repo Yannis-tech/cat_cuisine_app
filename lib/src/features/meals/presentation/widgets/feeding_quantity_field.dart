@@ -11,6 +11,8 @@ class FeedingQuantityField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -18,23 +20,35 @@ class FeedingQuantityField extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 12.0),
           child: Text(
             'Fütterungsmenge:',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: theme.textTheme.bodyLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: theme.colorScheme.onBackground,
+            ),
           ),
         ),
-        DropdownButton<String>(
-          isExpanded: true,
-          value: feedingQuantity.isNotEmpty ? feedingQuantity : null,
-          onChanged: onChanged,
-          items: [
-            DropdownMenuItem<String>(
-              value: 'halbe-halbe',
-              child: Text('halbe-halbe'),
-            ),
-            DropdownMenuItem<String>(
-              value: 'Je eine Packung',
-              child: Text('Je eine Packung'),
-            ),
-          ],
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.0),
+            border: Border.all(color: theme.colorScheme.primary),
+          ),
+          child: DropdownButton<String>(
+            isExpanded: true,
+            underline: SizedBox.shrink(),
+            value: feedingQuantity.isNotEmpty ? feedingQuantity : null,
+            onChanged: onChanged,
+            items: [
+              DropdownMenuItem<String>(
+                value: 'halbe-halbe',
+                child: Text('halbe-halbe', style: theme.textTheme.bodyMedium),
+              ),
+              DropdownMenuItem<String>(
+                value: 'Je eine Packung',
+                child:
+                    Text('Je eine Packung', style: theme.textTheme.bodyMedium),
+              ),
+            ],
+          ),
         ),
       ],
     );

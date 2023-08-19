@@ -1,3 +1,4 @@
+import 'package:cat_cuisine/src/features/meals/domain/meal.dart';
 import 'package:isar/isar.dart';
 import 'cat.dart';
 
@@ -13,5 +14,6 @@ enum AcceptanceRating {
 class CatAcceptance {
   Id id = Isar.autoIncrement;
   final cat = IsarLink<Cat>();
+  final meal = IsarLink<Meal>();
   late int acceptanceRating;
 }

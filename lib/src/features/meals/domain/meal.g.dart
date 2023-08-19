@@ -56,10 +56,11 @@ const MealSchema = CollectionSchema(
   indexes: {},
   links: {
     r'catAcceptances': LinkSchema(
-      id: -3072846196267089132,
+      id: 174897108209944370,
       name: r'catAcceptances',
       target: r'CatAcceptance',
       single: false,
+      linkName: r'meal',
     )
   },
   embeddedSchemas: {},

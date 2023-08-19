@@ -13,6 +13,7 @@ class QuantitiesField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -20,22 +21,33 @@ class QuantitiesField extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 12.0),
           child: Text(
             'Packungsgröße:',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: theme.textTheme.bodyLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: theme.colorScheme.onBackground,
+            ),
           ),
         ),
-        DropdownButton<String>(
-          isExpanded: true,
-          value: selectedQuantity,
-          onChanged: onQuantityChanged,
-          items: (quantities.length == 1 && quantities[0] == selectedQuantity
-                  ? quantities
-                  : (quantities.toSet()..add(selectedQuantity)).toList())
-              .map<DropdownMenuItem<String>>((quantity) {
-            return DropdownMenuItem<String>(
-              value: quantity,
-              child: Text(quantity),
-            );
-          }).toList(),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.0),
+            border: Border.all(color: theme.colorScheme.primary),
+          ),
+          child: DropdownButton<String>(
+            isExpanded: true,
+            underline: SizedBox.shrink(),
+            value: selectedQuantity,
+            onChanged: onQuantityChanged,
+            items: (quantities.length == 1 && quantities[0] == selectedQuantity
+                    ? quantities
+                    : (quantities.toSet()..add(selectedQuantity)).toList())
+                .map<DropdownMenuItem<String>>((quantity) {
+              return DropdownMenuItem<String>(
+                value: quantity,
+                child: Text(quantity, style: theme.textTheme.bodyMedium),
+              );
+            }).toList(),
+          ),
         ),
       ],
     );

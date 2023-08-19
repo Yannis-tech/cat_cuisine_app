@@ -35,6 +35,12 @@ const CatAcceptanceSchema = CollectionSchema(
       name: r'cat',
       target: r'Cat',
       single: true,
+    ),
+    r'meal': LinkSchema(
+      id: -2623436091692686138,
+      name: r'meal',
+      target: r'Meal',
+      single: true,
     )
   },
   embeddedSchemas: {},
@@ -93,13 +99,14 @@ Id _catAcceptanceGetId(CatAcceptance object) {
 }
 
 List<IsarLinkBase<dynamic>> _catAcceptanceGetLinks(CatAcceptance object) {
-  return [object.cat];
+  return [object.cat, object.meal];
 }
 
 void _catAcceptanceAttach(
     IsarCollection<dynamic> col, Id id, CatAcceptance object) {
   object.id = id;
   object.cat.attach(col, col.isar.collection<Cat>(), r'cat', id);
+  object.meal.attach(col, col.isar.collection<Meal>(), r'meal', id);
 }
 
 extension CatAcceptanceQueryWhereSort
@@ -312,6 +319,20 @@ extension CatAcceptanceQueryLinks
       catIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'cat', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<CatAcceptance, CatAcceptance, QAfterFilterCondition> meal(
+      FilterQuery<Meal> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.link(q, r'meal');
+    });
+  }
+
+  QueryBuilder<CatAcceptance, CatAcceptance, QAfterFilterCondition>
+      mealIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'meal', 0, true, 0, true);
     });
   }
 }

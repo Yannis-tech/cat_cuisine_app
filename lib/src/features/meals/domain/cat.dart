@@ -9,5 +9,5 @@ class Cat {
   String? name;
 
   @Backlink(to: 'cat')
-  final catAcceptance = IsarLink<CatAcceptance>();
+  final catAcceptance = IsarLinks<CatAcceptance>();
 }

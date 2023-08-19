@@ -34,7 +34,7 @@ const CatSchema = CollectionSchema(
       id: 5465650704988655900,
       name: r'catAcceptance',
       target: r'CatAcceptance',
-      single: true,
+      single: false,
       linkName: r'cat',
     )
   },
@@ -392,9 +392,52 @@ extension CatQueryLinks on QueryBuilder<Cat, Cat, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Cat, Cat, QAfterFilterCondition> catAcceptanceIsNull() {
+  QueryBuilder<Cat, Cat, QAfterFilterCondition> catAcceptanceLengthEqualTo(
+      int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'catAcceptance', length, true, length, true);
+    });
+  }
+
+  QueryBuilder<Cat, Cat, QAfterFilterCondition> catAcceptanceIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'catAcceptance', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<Cat, Cat, QAfterFilterCondition> catAcceptanceIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'catAcceptance', 0, false, 999999, true);
+    });
+  }
+
+  QueryBuilder<Cat, Cat, QAfterFilterCondition> catAcceptanceLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'catAcceptance', 0, true, length, include);
+    });
+  }
+
+  QueryBuilder<Cat, Cat, QAfterFilterCondition> catAcceptanceLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'catAcceptance', length, include, 999999, true);
+    });
+  }
+
+  QueryBuilder<Cat, Cat, QAfterFilterCondition> catAcceptanceLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(
+          r'catAcceptance', lower, includeLower, upper, includeUpper);
     });
   }
 }

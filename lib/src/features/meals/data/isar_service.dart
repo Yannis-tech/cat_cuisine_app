@@ -33,6 +33,18 @@ class IsarService {
     isar.writeTxnSync<int>(() => isar.meals.putSync(updatedMeal));
   }
 
+  Future<void> deleteMeal(Meal meal) async {
+    final isar = await db;
+    await isar.writeTxn(() async {
+      // Delete associated CatAcceptance objects
+      for (final catAcceptance in meal.catAcceptances) {
+        await isar.catAcceptances.delete(catAcceptance.id);
+      }
+      // Delete the meal
+      await isar.meals.delete(meal.id);
+    });
+  }
+
   // ***
   // Cat functions
   Future<void> saveCat(Cat newCat) async {
@@ -45,6 +57,14 @@ class IsarService {
     return isar.cats.where().findAll();
   }
 
+  Future<void> deleteCat(Cat cat) async {
+    final isar = await db;
+    await isar.writeTxn(() async {
+      // Delete the cat
+      await isar.cats.delete(cat.id);
+    });
+  }
+
   // ***
   // Acceptance Rating functions
   Future<void> saveCatAcceptance(CatAcceptance newCatAcceptance) async {
@@ -52,6 +72,8 @@ class IsarService {
     isar.writeTxnSync<int>(() => isar.catAcceptances.putSync(newCatAcceptance));
   }
 
+  // ***
+  // Database
   Future<void> cleanDb() async {
     final isar = await db;
     await isar.writeTxn(() => isar.clear());

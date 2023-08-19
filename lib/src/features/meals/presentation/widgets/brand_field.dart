@@ -13,6 +13,8 @@ class BrandField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -23,20 +25,29 @@ class BrandField extends StatelessWidget {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),
-        DropdownButton<String>(
-          isExpanded: true,
-          value: brand.isNotEmpty && brands.any((b) => b['name'] == brand)
-              ? brand
-              : null,
-          onChanged: (String? newValue) {
-            onBrandChanged(newValue);
-          },
-          items: brands.map<DropdownMenuItem<String>>((brandData) {
-            return DropdownMenuItem<String>(
-              value: brandData['name'],
-              child: Text(brandData['name']),
-            );
-          }).toList(),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.0),
+            border: Border.all(color: theme.colorScheme.primary),
+          ),
+          child: DropdownButton<String>(
+            isExpanded: true,
+            underline: SizedBox.shrink(),
+            value: brand.isNotEmpty && brands.any((b) => b['name'] == brand)
+                ? brand
+                : null,
+            onChanged: (String? newValue) {
+              onBrandChanged(newValue);
+            },
+            items: brands.map<DropdownMenuItem<String>>((brandData) {
+              return DropdownMenuItem<String>(
+                value: brandData['name'],
+                child:
+                    Text(brandData['name'], style: theme.textTheme.bodyMedium),
+              );
+            }).toList(),
+          ),
         ),
       ],
     );
