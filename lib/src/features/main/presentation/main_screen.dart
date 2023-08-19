@@ -1,10 +1,8 @@
 import 'package:cat_cuisine/src/features/meals/data/isar_service.dart';
+import 'package:cat_cuisine/src/features/meals/domain/meal.dart';
+import 'package:cat_cuisine/src/features/meals/presentation/manage_meal_screen.dart';
+import 'package:cat_cuisine/src/features/meals/presentation/meal_card.dart';
 import 'package:flutter/material.dart';
-
-import '../../meals/domain/cat.dart';
-import '../../meals/domain/meal.dart';
-import '../../meals/presentation/add_meal.dart';
-import '../../meals/presentation/update_meal.dart';
 
 class MainScreen extends StatelessWidget {
   MainScreen({Key? key}) : super(key: key);
@@ -12,11 +10,13 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+
     return Scaffold(
-      backgroundColor: Color(0xFFEFEFEF),
+      backgroundColor: theme.colorScheme.background, // Using background color
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
-        title: Text('Cat Cuisine'),
+        backgroundColor: theme.colorScheme.background, // Using primary color
+        title: Text('Cat Cuisine', style: theme.textTheme.displayMedium),
         actions: <Widget>[
           Stack(
             children: <Widget>[
@@ -34,6 +34,7 @@ class MainScreen extends StatelessWidget {
                   child: Icon(
                     Icons.settings,
                     size: 12,
+                    color: theme.iconTheme.color,
                   ),
                 ),
               ),
@@ -46,24 +47,37 @@ class MainScreen extends StatelessWidget {
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 12.0, vertical: 28.0), // Increased padding
               child: StreamBuilder<List<Meal>>(
                 stream: service.listenToMeals(),
-                builder: (context, snapshot) => GridView.count(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 8,
-                  mainAxisSpacing: 8,
-                  scrollDirection: Axis.horizontal,
+                builder: (context, snapshot) => ListView(
                   children: snapshot.hasData
                       ? snapshot.data!.map((meal) {
-                          return ElevatedButton(
-                            onPressed: () {
-                               List<Cat> cats = service.getAllCats();
-    Meal selectedMeal = /* obtain or define the selected meal here */;
-                              // Here we navigate to the UpdateMeal screen.
-                              UpdateMeal.navigate(context, selectedMeal, cats, onMealUpdated, service);
-                            },
-                            child: Text(meal.dateOfEntry.toString()),
+                          return Padding(
+                            padding: const EdgeInsetsDirectional.only(
+                                top: 8, bottom: 8),
+                            child: MealCard(
+                              meal: meal,
+                              onTap: () {
+                                Meal selectedMeal = meal;
+                                showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  builder: (context) => SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.9,
+                                    child: ManageMealScreen.update(
+                                      meal: selectedMeal,
+                                      onSubmit: (updatedMeal) {
+                                        service.updateMeal(updatedMeal);
+                                      },
+                                      service: service,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
                           );
                         }).toList()
                       : [],
@@ -72,20 +86,30 @@ class MainScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          ElevatedButton(
-            onPressed: () {
-              showModalBottomSheet(
-                context: context,
-                isScrollControlled:
-                    true, // Allows full control over the modal's height
-                builder: (context) => SizedBox(
-                  height: MediaQuery.of(context).size.height *
-                      0.9, // 90% of screen height
-                  child: AddMeal(service),
-                ),
-              );
-            },
-            child: const Text("Add Meal"),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: theme.colorScheme.onPrimary,
+                backgroundColor: theme.colorScheme.primary,
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 16, vertical: 12), // Set padding as needed
+                minimumSize: const Size(88, 36), // Set minimum size as needed
+              ),
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled:
+                      true, // Allows full control over the modal's height
+                  builder: (context) => SizedBox(
+                    height: MediaQuery.of(context).size.height *
+                        0.9, // 90% of screen height
+                    child: ManageMealScreen(service),
+                  ),
+                );
+              },
+              child: const Text("Add Meal"),
+            ),
           ),
           const SizedBox(height: 8),
         ],

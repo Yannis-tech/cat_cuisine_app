@@ -11,19 +11,11 @@ class IsarService {
     db = openDB();
   }
 
+  // ***
+  // Meal functions
   Future<void> saveMeal(Meal newMeal) async {
     final isar = await db;
     isar.writeTxnSync<int>(() => isar.meals.putSync(newMeal));
-  }
-
-  Future<void> saveCat(Cat newCat) async {
-    final isar = await db;
-    isar.writeTxnSync<int>(() => isar.cats.putSync(newCat));
-  }
-
-  Future<void> saveCatAcceptance(CatAcceptance newCatAcceptance) async {
-    final isar = await db;
-    isar.writeTxnSync<int>(() => isar.catAcceptances.putSync(newCatAcceptance));
   }
 
   Future<List<Meal>> getAllMeals() async {
@@ -31,14 +23,33 @@ class IsarService {
     return isar.meals.where().findAll();
   }
 
+  Stream<List<Meal>> listenToMeals() async* {
+    final isar = await db;
+    yield* isar.meals.where().watch(fireImmediately: true);
+  }
+
+  Future<void> updateMeal(Meal updatedMeal) async {
+    final isar = await db;
+    isar.writeTxnSync<int>(() => isar.meals.putSync(updatedMeal));
+  }
+
+  // ***
+  // Cat functions
+  Future<void> saveCat(Cat newCat) async {
+    final isar = await db;
+    isar.writeTxnSync<int>(() => isar.cats.putSync(newCat));
+  }
+
   Future<List<Cat>> getAllCats() async {
     final isar = await db;
     return isar.cats.where().findAll();
   }
 
-  Stream<List<Meal>> listenToMeals() async* {
+  // ***
+  // Acceptance Rating functions
+  Future<void> saveCatAcceptance(CatAcceptance newCatAcceptance) async {
     final isar = await db;
-    yield* isar.meals.where().watch(fireImmediately: true);
+    isar.writeTxnSync<int>(() => isar.catAcceptances.putSync(newCatAcceptance));
   }
 
   Future<void> cleanDb() async {

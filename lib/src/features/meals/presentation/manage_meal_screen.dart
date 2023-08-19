@@ -9,29 +9,29 @@ import '../data/data_utils.dart';
 import '../data/isar_service.dart';
 import '../domain/meal.dart';
 
-class AddMeal extends StatefulWidget {
+class ManageMealScreen extends StatefulWidget {
   final Meal? meal;
   final ValueChanged<Meal>? onSubmit;
   final IsarService service;
 
   // Existing meal constructor for updating
-  AddMeal.update({
+  ManageMealScreen.update({
     Key? key,
     required this.meal,
     required this.onSubmit,
     required this.service,
   }) : super(key: key);
 
-  const AddMeal(this.service, {Key? key})
+  const ManageMealScreen(this.service, {Key? key})
       : meal = null,
         onSubmit = null,
         super(key: key);
 
   @override
-  State<AddMeal> createState() => _AddMealState();
+  State<ManageMealScreen> createState() => _ManageMealScreenState();
 }
 
-class _AddMealState extends State<AddMeal> {
+class _ManageMealScreenState extends State<ManageMealScreen> {
   // Initialize form controllers
   DateTime _dateOfEntry = DateTime.now();
   void _onDateChanged(DateTime? newDate) {
