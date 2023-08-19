@@ -1,5 +1,6 @@
 import 'package:cat_cuisine/src/features/meals/data/isar_service.dart';
 import 'package:cat_cuisine/src/features/meals/domain/meal.dart';
+import 'package:cat_cuisine/src/features/meals/presentation/manage_cat_screen.dart';
 import 'package:cat_cuisine/src/features/meals/presentation/manage_meal_screen.dart';
 import 'package:cat_cuisine/src/features/meals/presentation/meal_card.dart';
 import 'package:flutter/material.dart';
@@ -120,7 +121,14 @@ class MainScreen extends StatelessWidget {
           // You can add more items here
         ],
         onTap: (index) {
-          // Handle navigation based on the selected index
+          if (index == 0) {
+            // If the "Katzenhotel" item is tapped
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ManageCatScreen(service)),
+            );
+          }
+          // Handle other navigation based on the selected index
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
