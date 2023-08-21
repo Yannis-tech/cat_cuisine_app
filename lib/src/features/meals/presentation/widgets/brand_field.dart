@@ -22,7 +22,10 @@ class BrandField extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 12.0),
           child: Text(
             'Marke:',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: theme.textTheme.bodyLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: theme.colorScheme.onBackground,
+            ),
           ),
         ),
         Container(

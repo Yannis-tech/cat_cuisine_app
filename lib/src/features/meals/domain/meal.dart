@@ -1,5 +1,5 @@
+import 'package:cat_cuisine/src/features/meals/domain/rating.dart';
 import 'package:isar/isar.dart';
-import 'cat_acceptance.dart';
 
 part 'meal.g.dart';
 
@@ -14,5 +14,5 @@ class Meal {
   String? feedingQuantity;
 
   @Backlink(to: 'meal')
-  final catAcceptances = IsarLinks<CatAcceptance>();
+  final ratings = IsarLinks<Rating>(); // Multiple ratings per meal (each cat)
 }

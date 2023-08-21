@@ -55,10 +55,10 @@ const MealSchema = CollectionSchema(
   idName: r'id',
   indexes: {},
   links: {
-    r'catAcceptances': LinkSchema(
-      id: 174897108209944370,
-      name: r'catAcceptances',
-      target: r'CatAcceptance',
+    r'ratings': LinkSchema(
+      id: -1853878553909732294,
+      name: r'ratings',
+      target: r'Rating',
       single: false,
       linkName: r'meal',
     )
@@ -175,13 +175,12 @@ Id _mealGetId(Meal object) {
 }
 
 List<IsarLinkBase<dynamic>> _mealGetLinks(Meal object) {
-  return [object.catAcceptances];
+  return [object.ratings];
 }
 
 void _mealAttach(IsarCollection<dynamic> col, Id id, Meal object) {
   object.id = id;
-  object.catAcceptances
-      .attach(col, col.isar.collection<CatAcceptance>(), r'catAcceptances', id);
+  object.ratings.attach(col, col.isar.collection<Rating>(), r'ratings', id);
 }
 
 extension MealQueryWhereSort on QueryBuilder<Meal, Meal, QWhere> {
@@ -1197,52 +1196,51 @@ extension MealQueryFilter on QueryBuilder<Meal, Meal, QFilterCondition> {
 extension MealQueryObject on QueryBuilder<Meal, Meal, QFilterCondition> {}
 
 extension MealQueryLinks on QueryBuilder<Meal, Meal, QFilterCondition> {
-  QueryBuilder<Meal, Meal, QAfterFilterCondition> catAcceptances(
-      FilterQuery<CatAcceptance> q) {
+  QueryBuilder<Meal, Meal, QAfterFilterCondition> ratings(
+      FilterQuery<Rating> q) {
     return QueryBuilder.apply(this, (query) {
-      return query.link(q, r'catAcceptances');
+      return query.link(q, r'ratings');
     });
   }
 
-  QueryBuilder<Meal, Meal, QAfterFilterCondition> catAcceptancesLengthEqualTo(
+  QueryBuilder<Meal, Meal, QAfterFilterCondition> ratingsLengthEqualTo(
       int length) {
     return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'catAcceptances', length, true, length, true);
+      return query.linkLength(r'ratings', length, true, length, true);
     });
   }
 
-  QueryBuilder<Meal, Meal, QAfterFilterCondition> catAcceptancesIsEmpty() {
+  QueryBuilder<Meal, Meal, QAfterFilterCondition> ratingsIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'catAcceptances', 0, true, 0, true);
+      return query.linkLength(r'ratings', 0, true, 0, true);
     });
   }
 
-  QueryBuilder<Meal, Meal, QAfterFilterCondition> catAcceptancesIsNotEmpty() {
+  QueryBuilder<Meal, Meal, QAfterFilterCondition> ratingsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'catAcceptances', 0, false, 999999, true);
+      return query.linkLength(r'ratings', 0, false, 999999, true);
     });
   }
 
-  QueryBuilder<Meal, Meal, QAfterFilterCondition> catAcceptancesLengthLessThan(
+  QueryBuilder<Meal, Meal, QAfterFilterCondition> ratingsLengthLessThan(
     int length, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'catAcceptances', 0, true, length, include);
+      return query.linkLength(r'ratings', 0, true, length, include);
     });
   }
 
-  QueryBuilder<Meal, Meal, QAfterFilterCondition>
-      catAcceptancesLengthGreaterThan(
+  QueryBuilder<Meal, Meal, QAfterFilterCondition> ratingsLengthGreaterThan(
     int length, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'catAcceptances', length, include, 999999, true);
+      return query.linkLength(r'ratings', length, include, 999999, true);
     });
   }
 
-  QueryBuilder<Meal, Meal, QAfterFilterCondition> catAcceptancesLengthBetween(
+  QueryBuilder<Meal, Meal, QAfterFilterCondition> ratingsLengthBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -1250,7 +1248,7 @@ extension MealQueryLinks on QueryBuilder<Meal, Meal, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(
-          r'catAcceptances', lower, includeLower, upper, includeUpper);
+          r'ratings', lower, includeLower, upper, includeUpper);
     });
   }
 }

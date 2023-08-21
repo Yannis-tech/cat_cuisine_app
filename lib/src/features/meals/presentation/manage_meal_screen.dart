@@ -1,10 +1,14 @@
+import 'package:cat_cuisine/src/features/meals/domain/cat.dart';
+import 'package:cat_cuisine/src/features/meals/domain/rating.dart';
 import 'package:cat_cuisine/src/features/meals/presentation/widgets/brand_field.dart';
 import 'package:cat_cuisine/src/features/meals/presentation/widgets/date_of_entry_field.dart';
 import 'package:cat_cuisine/src/features/meals/presentation/widgets/feeding_quantity_field.dart';
 import 'package:cat_cuisine/src/features/meals/presentation/widgets/meal_sort_field.dart';
 import 'package:cat_cuisine/src/features/meals/presentation/widgets/quantities_field.dart';
+import 'package:cat_cuisine/src/features/meals/presentation/widgets/rating_field.dart';
 import 'package:cat_cuisine/src/features/meals/presentation/widgets/time_of_day_field.dart';
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 import '../data/data_utils.dart';
 import '../data/isar_service.dart';
 import '../domain/meal.dart';
@@ -88,6 +92,8 @@ class _ManageMealScreenState extends State<ManageMealScreen> {
     }
   }
 
+  Map<Cat, int> _ratings = {};
+
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -102,6 +108,21 @@ class _ManageMealScreenState extends State<ManageMealScreen> {
     _selectedQuantity =
         quantities != null && quantities.isNotEmpty ? quantities[0] : null;
     _feedingQuantity = widget.meal?.feedingQuantity ?? 'halbe-halbe';
+    // Fetch all cats
+    widget.service.getAllCats().then((cats) async {
+      // Fetch ratings for the current meal
+      final List<Rating> ratings = widget.meal != null
+          ? await widget.service.getRatingsForMeal(widget.meal!)
+          : [];
+      // Map the ratings to the corresponding cats
+      setState(() {
+        for (final cat in cats) {
+          final ratingForCat = ratings
+              .firstWhereOrNull((rating) => rating.cat.value?.id == cat.id);
+          _ratings[cat] = ratingForCat?.mealRating ?? 3; // Default rating
+        }
+      });
+    });
   }
 
   @override
@@ -201,7 +222,17 @@ class _ManageMealScreenState extends State<ManageMealScreen> {
                           ),
                           SizedBox(height: 16),
 
+                          RatingField(
+                            cats: _ratings.keys.toList(),
+                            ratings: _ratings,
+                            onRatingChanged: (Cat cat, int rating) {
+                              setState(() {
+                                _ratings[cat] = rating;
+                              });
+                            },
+                          ),
                           SizedBox(height: 16),
+
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(
@@ -221,15 +252,28 @@ class _ManageMealScreenState extends State<ManageMealScreen> {
                                       ? [_selectedQuantity!]
                                       : []
                                   ..feedingQuantity = _feedingQuantity;
-                                if (widget.onSubmit != null) {
-                                  widget.onSubmit!(mealToSubmit);
-                                } else {
-                                  widget.service.saveMeal(mealToSubmit);
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content:
-                                              Text("Mahlzeit gespeichert!")));
+                                // Save the meal first
+                                await widget.service.saveMeal(mealToSubmit);
+
+                                // Iterate through the ratings and save them
+                                for (final entry in _ratings.entries) {
+                                  final cat = entry.key;
+                                  final ratingValue = entry.value;
+
+                                  // Create a Rating object
+                                  final rating = Rating()
+                                    ..mealRating = ratingValue
+                                    ..cat.value = cat
+                                    ..meal.value = mealToSubmit;
+
+                                  // Save the rating
+                                  await widget.service.saveRating(rating);
                                 }
+
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content:
+                                            Text("Mahlzeit gespeichert!")));
 
                                 Navigator.pop(context);
                               }

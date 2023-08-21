@@ -16,7 +16,7 @@ class MealCard extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Card(
-        color: theme.colorScheme.primaryContainer, // Using the surface color
+        color: theme.colorScheme.primaryContainer,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
           child: Column(
@@ -30,30 +30,26 @@ class MealCard extends StatelessWidget {
                     meal.dateOfEntry != null
                         ? dateFormat.format(meal.dateOfEntry!.toLocal())
                         : '',
-                    style: theme.textTheme.titleMedium?.copyWith(
-                        color: theme.colorScheme
-                            .onPrimaryContainer), // Using headline6 style
+                    style: theme.textTheme.titleMedium
+                        ?.copyWith(color: theme.colorScheme.onPrimaryContainer),
                   ),
                   Text(
                     meal.timeOfDay ?? '',
-                    style: theme.textTheme.titleSmall?.copyWith(
-                        color: theme.colorScheme
-                            .onSurfaceVariant), // Using bodyText1 style
+                    style: theme.textTheme.titleSmall
+                        ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                   ),
                 ],
               ),
               SizedBox(height: 12),
               Text(
                 meal.brand ?? '',
-                style: theme.textTheme.labelLarge?.copyWith(
-                    color:
-                        theme.colorScheme.onSurface), // Using bodyText2 style
+                style: theme.textTheme.labelLarge
+                    ?.copyWith(color: theme.colorScheme.onSurface),
               ),
               Text(
                 meal.mealSort ?? '',
-                style: theme.textTheme.bodyMedium?.copyWith(
-                    color:
-                        theme.colorScheme.onSurface), // Using bodyText2 style
+                style: theme.textTheme.bodyMedium
+                    ?.copyWith(color: theme.colorScheme.onSurface),
               ),
             ],
           ),
