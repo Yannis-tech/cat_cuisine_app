@@ -74,10 +74,13 @@ class _ManageMealScreenState extends State<ManageMealScreen> {
     if (_brand.isNotEmpty && _mealSort != null) {
       final brandData =
           brandsData.firstWhere((brand) => brand['name'] == _brand);
-      final mealData =
-          brandData['meals'].firstWhere((meal) => meal['name'] == _mealSort);
+      final mealData = (brandData['meals'] as List<dynamic>?)
+          ?.firstWhere((meal) => meal['name'] == _mealSort, orElse: () => {});
       _quantities = List<String>.from(mealData?['quantities'] ?? []);
-      _selectedQuantity = _quantities.first;
+      if (_selectedQuantity == null ||
+          !_quantities.contains(_selectedQuantity)) {
+        _selectedQuantity = _quantities.isNotEmpty ? _quantities.first : null;
+      }
     }
   }
 

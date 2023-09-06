@@ -36,12 +36,9 @@ class QuantitiesField extends StatelessWidget {
           child: DropdownButton<String>(
             isExpanded: true,
             underline: SizedBox.shrink(),
-            value: selectedQuantity,
+            value: selectedQuantity.isEmpty ? null : selectedQuantity,
             onChanged: onQuantityChanged,
-            items: (quantities.length == 1 && quantities[0] == selectedQuantity
-                    ? quantities
-                    : (quantities.toSet()..add(selectedQuantity)).toList())
-                .map<DropdownMenuItem<String>>((quantity) {
+            items: quantities.map<DropdownMenuItem<String>>((String quantity) {
               return DropdownMenuItem<String>(
                 value: quantity,
                 child: Text(quantity, style: theme.textTheme.bodyMedium),
