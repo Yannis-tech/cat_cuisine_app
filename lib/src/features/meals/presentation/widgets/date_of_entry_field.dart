@@ -1,39 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-class DateOfEntryField extends StatefulWidget {
-  final DateTime dateOfEntry;
+import '../../domain/meal.dart';
+import '../../provider/providers.dart';
+
+class DateOfEntryField extends ConsumerWidget {
+  final Meal? meal;
   final ValueChanged<DateTime?> onDateChanged;
 
   DateOfEntryField({
-    required this.dateOfEntry,
+    required this.meal,
     required this.onDateChanged,
   });
 
   @override
-  _DateOfEntryFieldState createState() => _DateOfEntryFieldState();
-}
-
-class _DateOfEntryFieldState extends State<DateOfEntryField> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     var theme = Theme.of(context);
+
+    // Access your ViewModel to get the dateOfEntry
+    final viewModel = ref.watch(manageMealProvider(meal));
 
     return InkWell(
       onTap: () async {
         final selectedDate = await showDatePicker(
           context: context,
-          initialDate: widget.dateOfEntry,
+          initialDate: viewModel.dateOfEntry,
           firstDate: DateTime(2020),
           lastDate: DateTime.now(),
         );
         if (selectedDate != null) {
-          widget.onDateChanged(selectedDate);
+          viewModel.onDateChanged(selectedDate);
         }
       },
       child: ListTile(
         title: Text(
-          'Datum: ${DateFormat('dd. MMMM yyyy', 'de_DE').format(widget.dateOfEntry)}',
+          'Datum: ${DateFormat('dd. MMMM yyyy', 'de_DE').format(viewModel.dateOfEntry)}',
           style: theme.textTheme.bodyMedium?.copyWith(
             fontSize: 16.0,
             color: theme.colorScheme.onBackground,

@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class BrandField extends StatelessWidget {
-  final String brand;
-  final List<Map<String, dynamic>> brands;
+import '../../domain/meal.dart';
+import '../../provider/providers.dart';
+
+class BrandField extends ConsumerWidget {
   final ValueChanged<String?> onBrandChanged;
+  final Meal? meal;
 
   BrandField({
-    required this.brand,
-    required this.brands,
     required this.onBrandChanged,
+    required this.meal,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     var theme = Theme.of(context);
+
+    // Read values from your ViewModel provider
+    final viewModel = ref.watch(manageMealProvider(meal));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,13 +42,16 @@ class BrandField extends StatelessWidget {
           child: DropdownButton<String>(
             isExpanded: true,
             underline: SizedBox.shrink(),
-            value: brand.isNotEmpty && brands.any((b) => b['name'] == brand)
-                ? brand
+            value: viewModel.brand.isNotEmpty &&
+                    viewModel.brandsData
+                        .any((b) => b['name'] == viewModel.brand)
+                ? viewModel.brand
                 : null,
             onChanged: (String? newValue) {
               onBrandChanged(newValue);
             },
-            items: brands.map<DropdownMenuItem<String>>((brandData) {
+            items:
+                viewModel.brandsData.map<DropdownMenuItem<String>>((brandData) {
               return DropdownMenuItem<String>(
                 value: brandData['name'],
                 child:

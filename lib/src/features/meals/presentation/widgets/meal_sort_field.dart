@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MealSortField extends StatelessWidget {
-  final String mealSort;
-  final List<dynamic> meals;
+import '../../domain/meal.dart';
+import '../../provider/providers.dart';
+
+class MealSortField extends ConsumerWidget {
   final ValueChanged<String?> onMealSortChanged;
+  final Meal? meal;
 
   MealSortField({
-    required this.mealSort,
-    required this.meals,
     required this.onMealSortChanged,
+    required this.meal,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     var theme = Theme.of(context);
+
+    final viewModel = ref.watch(manageMealProvider(meal));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,12 +41,14 @@ class MealSortField extends StatelessWidget {
           child: DropdownButton<String>(
             isExpanded: true,
             underline: SizedBox.shrink(),
-            value:
-                mealSort.isNotEmpty && meals.any((m) => m['name'] == mealSort)
-                    ? mealSort
-                    : null,
+            value: viewModel.mealSort != null &&
+                    viewModel.mealsData
+                        .any((m) => m['name'] == viewModel.mealSort)
+                ? viewModel.mealSort
+                : null,
             onChanged: onMealSortChanged,
-            items: meals.map<DropdownMenuItem<String>>((mealData) {
+            items:
+                viewModel.mealsData.map<DropdownMenuItem<String>>((mealData) {
               return DropdownMenuItem<String>(
                 value: mealData['name'],
                 child:

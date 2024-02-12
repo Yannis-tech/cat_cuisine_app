@@ -1,321 +1,480 @@
 {
-    "brands": [
-      {
-        "name": "Leonardo",
-        "meals": [
-          {
-            "name": "Geflügel Pur",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "Reich an Ente",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "Reich an Kaninchen",
-            "quantities": [
-              "200g",
-              "400g"
-            ]
-          },
-          {
-            "name": "Reich an Leber",
-            "quantities": [
-              "200g",
-              "400g"
-            ]
-          },
-          {
-            "name": "Reich an Rind",
-            "quantities": [
-              "200g",
-              "400g"
-            ]
-          },
-          {
-            "name": "Reich an Seefisch",
-            "quantities": [
-              "200g",
-              "400g"
-            ]
-          },
-          {
-            "name": "Hering",
-            "quantities": [
-              "200g",
-              "400g"
-            ]
-          },
-          {
-            "name": "Huhn",
-            "quantities": [
-              "200g",
-              "400g"
-            ]
-          },
-          {
-            "name": "Lachs",
-            "quantities": [
-              "200g",
-              "400g"
-            ]
-          },
-          {
-            "name": "Lamm",
-            "quantities": [
-              "200g",
-              "400g"
-            ]
-          },
-          {
-            "name": "Mit Wild",
-            "quantities": [
-              "200g",
-              "400g"
-            ]
-          },
-          {
-            "name": "Truthahn",
-            "quantities": [
-              "200g",
-              "400g"
-            ]
-          }
-        ]
-      },
-      {
-        "name": "MACs Cat",
-        "meals": [
-          {
-            "name": "Rind & Hühnerherzen",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "Ente, Kaninchen & Rind",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "Ente, Pute & Huhn",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "Huhn pur mit ganzen Herzen",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "Rind",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "Herz & Leber",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "Lamm & Pute",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "Lachs & Huhn",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "Pute & Heidelbeeren",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "Kalb & Pute",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "Geflügel & Cranberry",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          }
-        ]
-      },
-      {
-        "name": "MjAMjAM",
-        "meals": [
-          {
-            "name": "saftiges Huhn an leckeren Möhrchen",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "Mahlzeit mit leckeren Herzen",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "leckeres Rind an gedämpftem Kürbis",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "gute Pute an gedämpftem Kürbis",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "deliziöses Rentier mit Hühnchen an leckeren Möhrchen",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "kulinarischer Hirsch und Truthahn an frischen Cranberries",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "köstliche Garnelen an saftigem Hühnchen",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "zarte Ziege an leckeren Möhrchen",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "herzhaftes Wild & Kaninchen an fruchtigen Heidelbeeren",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "köstliches Pferd an gedämpftem Kürbis",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "schmackhafter Truthahn an leckeren Möhrchen",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "saftiges Huhn und Wildlachs",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "zarte Ente & Geflügel an leckeren Möhrchen",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "vorzügliches Kabel & Truthahn an leckeren Möhrchen",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "saftiges Hühnchen an Brokkoli",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          },
-          {
-            "name": "saftiges Schwein an leckeren Möhrchen",
-            "quantities": [
-              "200g",
-              "400g",
-              "800g"
-            ]
-          }
-        ]
-      }
-    ]
-  }
+  "brands": [
+    {
+      "name": "Leonardo",
+      "meals": [
+        {
+          "name": "Geflügel Pur",
+          "quantities": [
+            "200g",
+            "400g",
+            "800g"
+          ]
+        },
+        {
+          "name": "Reich an Ente",
+          "quantities": [
+            "200g",
+            "400g",
+            "800g"
+          ]
+        },
+        {
+          "name": "Reich an Kaninchen",
+          "quantities": [
+            "200g",
+            "400g"
+          ]
+        },
+        {
+          "name": "Reich an Leber",
+          "quantities": [
+            "200g",
+            "400g"
+          ]
+        },
+        {
+          "name": "Reich an Rind",
+          "quantities": [
+            "200g",
+            "400g"
+          ]
+        },
+        {
+          "name": "Reich an Seefisch",
+          "quantities": [
+            "200g",
+            "400g"
+          ]
+        },
+        {
+          "name": "Hering",
+          "quantities": [
+            "200g",
+            "400g"
+          ]
+        },
+        {
+          "name": "Huhn",
+          "quantities": [
+            "200g",
+            "400g"
+          ]
+        },
+        {
+          "name": "Lachs",
+          "quantities": [
+            "200g",
+            "400g"
+          ]
+        },
+        {
+          "name": "Lamm",
+          "quantities": [
+            "200g",
+            "400g"
+          ]
+        },
+        {
+          "name": "Mit Wild",
+          "quantities": [
+            "200g",
+            "400g"
+          ]
+        },
+        {
+          "name": "Truthahn",
+          "quantities": [
+            "200g",
+            "400g"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MACs Cat",
+      "meals": [
+        {
+          "name": "Ente, Kaninchen & Rind",
+          "quantities": [
+            "200 g",
+            "400 g",
+            "800 g"
+          ]
+        },
+        {
+          "name": "Ente, Kaninchen & Rind",
+          "quantities": [
+            "200 g",
+            "400 g",
+            "800 g"
+          ]
+        },
+        {
+          "name": "Ente, Pute & Huhn",
+          "quantities": [
+            "200 g",
+            "400 g",
+            "800 g"
+          ]
+        },
+        {
+          "name": "Geflügel & Cranberry",
+          "quantities": [
+            "200 g",
+            "400 g",
+            "800 g"
+          ]
+        },
+        {
+          "name": "Geflügel & Cranberry",
+          "quantities": [
+            "200 g",
+            "400 g",
+            "800 g"
+          ]
+        },
+        {
+          "name": "Herz & Leber",
+          "quantities": [
+            "200 g",
+            "400 g",
+            "800 g"
+          ]
+        },
+        {
+          "name": "Huhn pur mit ganzen Herzen",
+          "quantities": [
+            "200 g",
+            "400 g",
+            "800 g"
+          ]
+        },
+        {
+          "name": "Huhn pur mit ganzen Herzen",
+          "quantities": [
+            "200 g",
+            "400 g",
+            "800 g"
+          ]
+        },
+        {
+          "name": "Kalb & Pute",
+          "quantities": [
+            "200 g",
+            "400 g",
+            "800 g"
+          ]
+        },
+        {
+          "name": "Lachs & Huhn",
+          "quantities": [
+            "200 g",
+            "400 g",
+            "800 g"
+          ]
+        },
+        {
+          "name": "Lachs & Huhn",
+          "quantities": [
+            "200 g",
+            "400 g",
+            "800 g"
+          ]
+        },
+        {
+          "name": "Lamm & Pute",
+          "quantities": [
+            "200 g",
+            "400 g",
+            "800 g"
+          ]
+        },
+        {
+          "name": "Pute & Heidelbeeren",
+          "quantities": [
+            "200 g",
+            "400 g",
+            "800 g"
+          ]
+        },
+        {
+          "name": "Pute & Heidelbeeren",
+          "quantities": [
+            "200 g",
+            "400 g",
+            "800 g"
+          ]
+        },
+        {
+          "name": "Rind & Hühnerherzen",
+          "quantities": [
+            "200 g",
+            "400 g",
+            "800 g"
+          ]
+        },
+        {
+          "name": "Rind",
+          "quantities": [
+            "200 g",
+            "400 g",
+            "800 g"
+          ]
+        },
+        {
+          "name": "Rind",
+          "quantities": [
+            "200 g",
+            "400 g",
+            "800 g"
+          ]
+        },
+        {
+          "name": "Kitten – Pute, Rind & Ente",
+          "quantities": [
+            "200 g",
+            "400 g",
+            "800 g"
+          ]
+        },
+        {
+          "name": "Kitten – Kalb & Hühnerherzen",
+          "quantities": [
+            "200 g",
+            "400 g",
+            "800 g"
+          ]
+        },
+        {
+          "name": "Kitten – Kalb & Hühnerherzen",
+          "quantities": [
+            "200 g",
+            "400 g",
+            "800 g"
+          ]
+        },
+        {
+          "name": "Kitten – Pute & Kaninchen",
+          "quantities": [
+            "200 g",
+            "400 g",
+            "800 g"
+          ]
+        },
+        {
+          "name": "Lachs & Huhn",
+          "quantities": [
+            "100 g",
+            "300 g"
+          ]
+        },
+        {
+          "name": "Lachs & Huhn",
+          "quantities": [
+            "100 g",
+            "300 g"
+          ]
+        },
+        {
+          "name": "Ente & Geflügel",
+          "quantities": [
+            "100 g",
+            "300 g"
+          ]
+        },
+        {
+          "name": "Kaninchen & Geflügel",
+          "quantities": [
+            "100 g",
+            "300 g"
+          ]
+        },
+        {
+          "name": "Kaninchen & Geflügel",
+          "quantities": [
+            "100 g",
+            "300 g"
+          ]
+        },
+        {
+          "name": "Huhn Pur",
+          "quantities": [
+            "100 g",
+            "300 g"
+          ]
+        },
+        {
+          "name": "Mono – frische Pute",
+          "quantities": [
+            "200 g",
+            "400 g",
+            "800 g"
+          ]
+        },
+        {
+          "name": "Mono – frische Pute",
+          "quantities": [
+            "200 g",
+            "400 g",
+            "800 g"
+          ]
+        },
+        {
+          "name": "Mono – frisches Lamm",
+          "quantities": [
+            "200 g",
+            "400 g"
+          ]
+        },
+        {
+          "name": "Mono – frisches Pferd",
+          "quantities": [
+            "200 g",
+            "400 g"
+          ]
+        },
+        {
+          "name": "Mono – frisches Pferd",
+          "quantities": [
+            "200 g",
+            "400 g"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MjAMjAM",
+      "meals": [
+        {
+          "name": "saftiges Huhn an leckeren Möhrchen",
+          "quantities": [
+            "200g",
+            "400g",
+            "800g"
+          ]
+        },
+        {
+          "name": "Mahlzeit mit leckeren Herzen",
+          "quantities": [
+            "200g",
+            "400g",
+            "800g"
+          ]
+        },
+        {
+          "name": "leckeres Rind an gedämpftem Kürbis",
+          "quantities": [
+            "200g",
+            "400g",
+            "800g"
+          ]
+        },
+        {
+          "name": "gute Pute an gedämpftem Kürbis",
+          "quantities": [
+            "200g",
+            "400g",
+            "800g"
+          ]
+        },
+        {
+          "name": "deliziöses Rentier mit Hühnchen an leckeren Möhrchen",
+          "quantities": [
+            "200g",
+            "400g",
+            "800g"
+          ]
+        },
+        {
+          "name": "kulinarischer Hirsch und Truthahn an frischen Cranberries",
+          "quantities": [
+            "200g",
+            "400g",
+            "800g"
+          ]
+        },
+        {
+          "name": "köstliche Garnelen an saftigem Hühnchen",
+          "quantities": [
+            "200g",
+            "400g",
+            "800g"
+          ]
+        },
+        {
+          "name": "zarte Ziege an leckeren Möhrchen",
+          "quantities": [
+            "200g",
+            "400g",
+            "800g"
+          ]
+        },
+        {
+          "name": "herzhaftes Wild & Kaninchen an fruchtigen Heidelbeeren",
+          "quantities": [
+            "200g",
+            "400g",
+            "800g"
+          ]
+        },
+        {
+          "name": "köstliches Pferd an gedämpftem Kürbis",
+          "quantities": [
+            "200g",
+            "400g",
+            "800g"
+          ]
+        },
+        {
+          "name": "schmackhafter Truthahn an leckeren Möhrchen",
+          "quantities": [
+            "200g",
+            "400g",
+            "800g"
+          ]
+        },
+        {
+          "name": "saftiges Huhn und Wildlachs",
+          "quantities": [
+            "200g",
+            "400g",
+            "800g"
+          ]
+        },
+        {
+          "name": "zarte Ente & Geflügel an leckeren Möhrchen",
+          "quantities": [
+            "200g",
+            "400g",
+            "800g"
+          ]
+        },
+        {
+          "name": "vorzügliches Kabel & Truthahn an leckeren Möhrchen",
+          "quantities": [
+            "200g",
+            "400g",
+            "800g"
+          ]
+        },
+        {
+          "name": "saftiges Hühnchen an Brokkoli",
+          "quantities": [
+            "200g",
+            "400g",
+            "800g"
+          ]
+        },
+        {
+          "name": "saftiges Schwein an leckeren Möhrchen",
+          "quantities": [
+            "200g",
+            "400g",
+            "800g"
+          ]
+        }
+      ]
+    }
+  ]
+}

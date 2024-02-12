@@ -1,7 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.cat_cuisine_app">
+
+    <!-- Add these permissions inside the manifest tag -->
+   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+   <!-- This permission is not required for Android 10 (API level 29) and above -->
+   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28"/>
+
    <application
-        android:label="cat_cuisine_app"
+        android:label="Cat Cuisine"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
