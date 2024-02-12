@@ -1,156 +1,57 @@
-import 'package:cat_cuisine/src/features/meals/data/isar_service.dart';
+import 'package:cat_cuisine/src/features/meals/presentation/main_meal_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cat_cuisine/src/features/meals/domain/meal.dart';
 import 'package:cat_cuisine/src/features/meals/presentation/manage_cat_screen.dart';
 import 'package:cat_cuisine/src/features/meals/presentation/manage_meal_screen.dart';
 import 'package:cat_cuisine/src/features/meals/presentation/meal_card.dart';
 import 'package:flutter/material.dart';
 
-class MainScreen extends StatelessWidget {
-  MainScreen({Key? key}) : super(key: key);
-  final service = IsarService();
+import '../../meals/provider/providers.dart';
+import '../provider/main_providers.dart';
 
+class MainScreen extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     var theme = Theme.of(context);
 
+    final selectedIndex = ref.watch(selectedIndexProvider);
+    final pages = [
+      MainMealScreen(),
+      ManageCatScreen(),
+      // Add more pages as per your navigation items
+    ];
+
     return Scaffold(
-      backgroundColor: theme.colorScheme.surface, // Using background color
+      backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: theme.colorScheme.background, // Using primary color
+        backgroundColor: theme.colorScheme.background,
         title: Text('Cat Cuisine', style: theme.textTheme.headlineSmall),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: 12.0, vertical: 28.0), // Increased padding
-        child: StreamBuilder<List<Meal>>(
-          stream: service.listenToMeals(),
-          //
-          builder: (context, snapshot) => ListView(
-            children: snapshot.hasData
-                ? snapshot.data!.map((meal) {
-                    return Padding(
-                      padding:
-                          const EdgeInsetsDirectional.only(top: 8, bottom: 8),
-                      child: Dismissible(
-                        key: ValueKey(
-                            meal.id), // Unique key for the Dismissible widget
-                        direction: DismissDirection.endToStart,
-                        background: Container(
-                          color: theme.colorScheme
-                              .error, // Background color when swiping
-                          child: Icon(Icons.delete,
-                              color: theme.colorScheme.onError),
-                          alignment: Alignment.centerRight,
-                          padding: EdgeInsets.only(right: 20),
-                        ),
-                        onDismissed: (direction) {
-                          service.deleteMeal(
-                              meal); // Assuming you have a deleteMeal method
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Mahlzeit gelöscht!")),
-                          );
-                        },
-                        child: GestureDetector(
-                          onLongPress: () {
-                            showDialog(
-                              context: context,
-                              builder: (ctx) => AlertDialog(
-                                title: Text('Mahlzeit löschen?'),
-                                content: Text(
-                                    'Möchten Sie diese Mahlzeit wirklich löschen?'),
-                                actions: [
-                                  TextButton(
-                                    child: Text('Nein',
-                                        style: theme.textTheme.labelMedium),
-                                    onPressed: () {
-                                      Navigator.of(ctx).pop();
-                                    },
-                                  ),
-                                  TextButton(
-                                    child: Text('Ja'),
-                                    onPressed: () {
-                                      service.deleteMeal(
-                                          meal); // Assuming you have a deleteMeal method
-                                      Navigator.of(ctx).pop();
-                                    },
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                          child: MealCard(
-                            meal: meal,
-                            onTap: () {
-                              Meal selectedMeal = meal;
-                              showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: true,
-                                builder: (context) => SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.9,
-                                  child: ManageMealScreen.update(
-                                    meal: selectedMeal,
-                                    onSubmit: (updatedMeal) {
-                                      service.updateMeal(updatedMeal);
-                                    },
-                                    service: service,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    );
-                  }).toList()
-                : [],
-          ),
-        ),
+        padding: EdgeInsets.only(
+            left: 12.0,
+            right: 12.0,
+            top: 28.0,
+            bottom: 10.0 // Adjust this padding as needed
+            ),
+        child: pages[selectedIndex], // Display the selected page with padding
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: theme.colorScheme.background,
+        selectedItemColor: theme.colorScheme.onSurface,
+        unselectedItemColor: theme.colorScheme.onSurface.withOpacity(0.5),
+        currentIndex: selectedIndex,
+        onTap: (index) =>
+            ref.read(selectedIndexProvider.notifier).state = index,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.pets),
-            label: 'Katzenhotel',
-          ),
+              icon: Icon(Icons.food_bank), label: 'Mahlzeiten'),
+          BottomNavigationBarItem(icon: Icon(Icons.pets), label: 'Katzenhotel'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.more_horiz), // Placeholder icon
-            label: 'Mehr', // Placeholder label
-          ),
-          // You can add more items here
+              icon: Icon(Icons.filter_list), label: 'Filter'),
+          BottomNavigationBarItem(icon: Icon(Icons.more_horiz), label: 'Mehr'),
+          // Add more items as needed
         ],
-        onTap: (index) {
-          if (index == 0) {
-            // If the "Katzenhotel" item is tapped
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ManageCatScreen(service)),
-            );
-          }
-          // Handle other navigation based on the selected index
-        },
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled:
-                true, // Allows full control over the modal's height
-            builder: (context) => SizedBox(
-              height: MediaQuery.of(context).size.height *
-                  0.9, // 90% of screen height
-              child: ManageMealScreen(service),
-            ),
-          );
-        },
-        icon: Icon(Icons.add),
-        label: Text('Erstellen',
-            style: theme.textTheme.labelMedium
-                ?.copyWith(color: theme.colorScheme.onSecondaryContainer)),
-        backgroundColor: theme.colorScheme.secondaryContainer,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

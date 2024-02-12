@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FeedingQuantityField extends StatelessWidget {
-  final String feedingQuantity;
-  final ValueChanged<String?> onChanged;
+import '../../domain/meal.dart';
+import '../../provider/providers.dart';
+
+class FeedingQuantityField extends ConsumerWidget {
+  final Meal? meal;
+  final ValueChanged<String?> onFeedingQuantityChanged;
 
   FeedingQuantityField({
-    required this.feedingQuantity,
-    required this.onChanged,
+    required this.meal,
+    required this.onFeedingQuantityChanged,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     var theme = Theme.of(context);
 
+    final viewModel = ref.watch(manageMealProvider(meal));
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -35,8 +40,10 @@ class FeedingQuantityField extends StatelessWidget {
           child: DropdownButton<String>(
             isExpanded: true,
             underline: SizedBox.shrink(),
-            value: feedingQuantity.isNotEmpty ? feedingQuantity : null,
-            onChanged: onChanged,
+            value: viewModel.feedingQuantity.isNotEmpty
+                ? viewModel.feedingQuantity
+                : null,
+            onChanged: onFeedingQuantityChanged,
             items: [
               DropdownMenuItem<String>(
                 value: 'halbe-halbe',

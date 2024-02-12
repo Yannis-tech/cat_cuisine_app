@@ -15,4 +15,17 @@ class Meal {
 
   @Backlink(to: 'meal')
   final ratings = IsarLinks<Rating>(); // Multiple ratings per meal (each cat)
+
+  int getTimeOfDayIndex() {
+    switch (timeOfDay) {
+      case 'Morgens':
+        return 3;
+      case 'Mittags':
+        return 2;
+      case 'Abends':
+        return 1;
+      default:
+        return 0;
+    }
+  }
 }

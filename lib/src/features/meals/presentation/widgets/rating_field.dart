@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:cat_cuisine/src/features/meals/domain/cat.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../domain/meal.dart';
+import '../../provider/providers.dart';
 
-typedef RatingChangedCallback = void Function(Cat cat, int rating);
-
-class RatingField extends StatelessWidget {
-  final List<Cat> cats;
-  final Map<Cat, int> ratings;
-  final RatingChangedCallback onRatingChanged;
+class RatingField extends ConsumerWidget {
+  final Meal? meal;
 
   RatingField({
-    required this.cats,
-    required this.ratings,
-    required this.onRatingChanged,
+    this.meal,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     var theme = Theme.of(context);
+    final viewModel = ref.watch(manageMealProvider(meal));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: cats.map((cat) {
+      children: viewModel.ratings.keys.map((cat) {
         return Column(
           children: [
             Padding(
@@ -34,14 +31,16 @@ class RatingField extends StatelessWidget {
               ),
             ),
             Slider(
-              value: ratings[cat]?.toDouble() ?? 0,
+              value: viewModel.ratings[cat]!.mealRating!.toDouble(),
               min: 1,
               max: 5,
               divisions: 4,
               onChanged: (double newValue) {
-                onRatingChanged(cat, newValue.toInt());
+                viewModel.onRatingChanged(
+                    cat, newValue.toInt()); // Use method from ViewModel
               },
-              label: '${ratings[cat]}',
+              label:
+                  '${viewModel.ratings[cat]?.mealRating}', // Use mealRating property here
             ),
           ],
         );

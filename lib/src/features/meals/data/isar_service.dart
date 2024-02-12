@@ -18,14 +18,40 @@ class IsarService {
     isar.writeTxnSync<int>(() => isar.meals.putSync(newMeal));
   }
 
-  Future<List<Meal>> getAllMeals() async {
+  Future<List<Meal>> getLast20Meals() async {
     final isar = await db;
-    return isar.meals.where().findAll();
+    List<Meal> meals = isar.meals.where().findAllSync();
+    meals.sort((a, b) {
+      int dateComparison = (b.dateOfEntry ?? DateTime.now())
+          .compareTo(a.dateOfEntry ?? DateTime.now());
+      if (dateComparison != 0) {
+        return dateComparison;
+      } else {
+        return b.getTimeOfDayIndex().compareTo(a.getTimeOfDayIndex());
+      }
+    });
+    return meals.take(20).toList();
   }
 
   Stream<List<Meal>> listenToMeals() async* {
     final isar = await db;
-    yield* isar.meals.where().watch(fireImmediately: true);
+    await for (var meals in isar.meals.where().watch(fireImmediately: true)) {
+      meals.sort((a, b) {
+        int dateComparison = (b.dateOfEntry ?? DateTime.now())
+            .compareTo(a.dateOfEntry ?? DateTime.now());
+        if (dateComparison != 0) {
+          return dateComparison;
+        } else {
+          return b.getTimeOfDayIndex().compareTo(a.getTimeOfDayIndex());
+        }
+      });
+      yield meals.take(20).toList();
+    }
+  }
+
+  Future<List<Meal>> getAllMeals() async {
+    final isar = await db;
+    return isar.meals.where().findAllSync();
   }
 
   Future<void> updateMeal(Meal updatedMeal) async {
@@ -53,6 +79,11 @@ class IsarService {
     return isar.cats.where().findAll();
   }
 
+  Future<void> updateCat(Cat updatedCat) async {
+    final isar = await db;
+    isar.writeTxnSync<int>(() => isar.cats.putSync(updatedCat));
+  }
+
   Future<void> deleteCat(Cat cat) async {
     final isar = await db;
     await isar.writeTxn(() async {
@@ -66,6 +97,11 @@ class IsarService {
   Future<void> saveRating(Rating newRating) async {
     final isar = await db;
     isar.writeTxnSync<int>(() => isar.ratings.putSync(newRating));
+  }
+
+  Future<void> updateRating(Rating updatedRating) async {
+    final isar = await db;
+    isar.writeTxnSync<int>(() => isar.ratings.putSync(updatedRating));
   }
 
   Future<void> deleteRating(Rating rating) async {
@@ -111,6 +147,24 @@ class IsarService {
         .filter()
         .cat((q) => q.idEqualTo(cat.id))
         .findAll();
+  }
+
+  Future<Rating?> getRatingForMealAndCat(Meal meal, Cat cat) async {
+    final isar = await db;
+    final ratings = await isar.ratings
+        .where()
+        .filter()
+        .meal((q) => q.idEqualTo(meal.id))
+        .cat((q) => q.idEqualTo(cat.id))
+        .findAll();
+
+    if (ratings.isNotEmpty) {
+      // If ratings exist, return the first one (assuming there should be only one per meal and cat)
+      return ratings.first;
+    } else {
+      // No rating found for the specified meal and cat
+      return null;
+    }
   }
 
   // ***

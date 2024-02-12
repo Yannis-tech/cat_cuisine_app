@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class QuantitiesField extends StatelessWidget {
-  final String selectedQuantity;
-  final List<String> quantities;
+import '../../domain/meal.dart';
+import '../../provider/providers.dart';
+
+class QuantitiesField extends ConsumerWidget {
+  final Meal? meal;
   final ValueChanged<String?> onQuantityChanged;
 
   QuantitiesField({
-    required this.selectedQuantity,
-    required this.quantities,
+    required this.meal,
     required this.onQuantityChanged,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     var theme = Theme.of(context);
+
+    final viewModel = ref.watch(manageMealProvider(meal));
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -36,9 +40,13 @@ class QuantitiesField extends StatelessWidget {
           child: DropdownButton<String>(
             isExpanded: true,
             underline: SizedBox.shrink(),
-            value: selectedQuantity.isEmpty ? null : selectedQuantity,
+            value: viewModel.selectedQuantity != null &&
+                    viewModel.selectedQuantity!.isNotEmpty
+                ? viewModel.selectedQuantity
+                : null,
             onChanged: onQuantityChanged,
-            items: quantities.map<DropdownMenuItem<String>>((String quantity) {
+            items: viewModel.quantities
+                .map<DropdownMenuItem<String>>((String quantity) {
               return DropdownMenuItem<String>(
                 value: quantity,
                 child: Text(quantity, style: theme.textTheme.bodyMedium),

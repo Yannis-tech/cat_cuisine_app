@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TimeOfDayField extends StatelessWidget {
-  final String timeOfDay;
+import '../../domain/meal.dart';
+import '../../provider/providers.dart';
+
+class TimeOfDayField extends ConsumerWidget {
+  final Meal? meal;
   final ValueChanged<String?> onTimeOfDayChanged;
 
   TimeOfDayField({
-    required this.timeOfDay,
+    required this.meal,
     required this.onTimeOfDayChanged,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     var theme = Theme.of(context);
+
+    final viewModel = ref.watch(manageMealProvider(meal));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,10 +41,8 @@ class TimeOfDayField extends StatelessWidget {
           child: DropdownButton<String>(
             isExpanded: true,
             underline: SizedBox.shrink(), // Remove default underline
-            value: timeOfDay,
-            onChanged: (String? newValue) {
-              onTimeOfDayChanged(newValue ?? timeOfDay);
-            },
+            value: viewModel.timeOfDay,
+            onChanged: onTimeOfDayChanged,
             items: [
               DropdownMenuItem<String>(
                 value: 'Morgens',
